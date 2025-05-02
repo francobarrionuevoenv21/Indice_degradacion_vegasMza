@@ -1,1 +1,0 @@
-# Indice_degradacion_vegasMza
