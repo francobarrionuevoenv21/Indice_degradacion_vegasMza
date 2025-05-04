@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Históricos Estaciones SMN Georreferenciados V1</title>
+    <title>Degradación de vegas cuenca del Rio Blanco Web Map App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="css/leaflet.css">
     <script src="js/leaflet.js"></script>
@@ -11,68 +11,73 @@
             margin: 10;
         }
 
-        .legend-box {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            margin-right: 5px;
-        }
-
-        .color-high { background-color: #d7191c; }
-        .color-medium-high { background-color: #fdae61; }
-        .color-medium { background-color: #ffffbf; }
-        .color-medium-low { background-color: #a6d96a; }
-        .color-low { background-color: #1a9641; }
         html, body, #map {
             height: 100vh; /* Full viewport height */
             width: 100vw; /* Full viewport width */
             margin: 0;
             padding: 0;
         }
+
+        /* Style for the info object*/
         .info {
-            padding: 6px 8px;
-            font: 14px/16px Arial, Helvetica, sans-serif;
-            background: rgba(255,255,255,0.8);
-            /*box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            border-radius: 5px;*/
-            width: 20em;
+            background-color: #697f3dd6;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+            font-family: Arial, sans-serif;
         }
 
-        .info_SMN {
-            padding: 6px 8px;
-            font: 14px/16px Arial, Helvetica, sans-serif;
-            background: rgba(255,255,255,0.8);
-            /*box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            border-radius: 5px;*/
-            width: 20em;
+        #dynamic-title {
+            font-size: 17px;
+            color: #e4b242; /* Customize title color */
+            margin-bottom: 5px;
         }
+
+        #current_feature {
+            font-size: 14px;
+            color: black;
+        }
+
+        /* Style for the legend object*/
+        .legend-title {
+            font-weight: bold;
+            color: #e4b242;
+            margin-bottom: 8px;
+        }
+
+        .legend-item {
+            color: "black";
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .legend-box {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            vertical-align: middle;
+            border: 1px solid #999;
+        }
+
+        /*CHECK THIS!!!*/
         .info h4 {
             margin: 0 0 5px;
-            color: #1d478b;
-        }
-        .info #current_feature {
-            margin: 6px 0;
         }
 
-        .info_SMN #current_feature_SMN {
-            margin: 6px 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-        }
-
+        /* Style for layers controller panel */
         #panel {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 220px; /* Fixed width */
-            height: 70px; /* Fixed height */
-            background: rgba(255,255,255,0.8);
-            box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-            padding: 5px;
-            z-index: 1000;
-            flex-direction: column; /* Ensures child elements stack properly */
+            background-color: #697f3dd6;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+            font-family: Arial, sans-serif;
+        }
+
+        .panel-title {
+            font-size: 17px;
+            margin: 0 0 0px;
+            color:  #e4b242;
         }
 
         .custom-control {
@@ -87,6 +92,9 @@
             padding: 0px; /* Add padding */
             background: transparent !important;
             border: none !important; /* Make the border line transparent */
+            color: "black"; /* Change text color */
+            font-family: Arial, sans-serif;
+            font-size: 13px;
         }
 
         #about-panel {
@@ -128,6 +136,16 @@
             text-decoration: none;
         }
 
+        /* Style for the entire legend container */
+        .legend {
+            background-color: #697f3dd8; /* Light transparent background */
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
 
     </style>
 </head>
@@ -145,33 +163,32 @@
         // -------------------------------------------------------------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------------------------------------------------------------
         // Initial settings
-        let map = L.map("map").setView([-32.98489,-69.32249], 12*1.1);
+        let map = L.map("map").setView([-32.99489,-69.32249], 12);
         map.zoomControl.setPosition('bottomleft');
-        
-        ;
 
         L.tileLayer("https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attribution/">CartoDB</a>',
             subdomains: "abcd",
-            maxZoom: 19
+            maxZoom: 35
         }).addTo(map);
 
         // -------------------------------------------------------------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------------------------------------------------------------
-        // info divs for references and meteorological data table
-        let info = L.control({position: "topright"});
+        // Complete
+        let info = L.control({position: "topright"}); // Referencias control
 
         function infoDiv(divWidth) {
             if (info._map) {
-                // Remove existing control if it's already added to the map
-                info.remove();
+                info.remove(); // Remove existing control if already added
             }
 
             info.onAdd = function() {
                 let div = L.DomUtil.create("div", "info");
-                div.innerHTML = '<h4 id="dynamic-title" style="font-size: 17px;">Referencias</h4><p id="current_feature"></p>';
-                div.style.width = divWidth;
-                return div; // Return the div to be added to the map
+                div.innerHTML = `
+                    <h4 id="dynamic-title">Información</h4>
+                    <p id="current_feature"></p>`;
+                div.style.width = divWidth; // Only keep width if it's dynamic
+                return div;
             };
 
             info.addTo(map); // Add the control to the map
@@ -184,8 +201,8 @@
         // -------------------------------------------------------------------------------------------------------------------------------------
         // Highlighting style for features in departamentos and cuencas layers
         
-        let info_p = document.getElementById("current_feature"); // If any doubt check info.onAdd
-        let info_h4 = document.getElementById("dynamic-title");
+        //let info_p = document.getElementById("current_feature"); // If any doubt check info.onAdd
+        //let info_h4 = document.getElementById("dynamic-title");
         let geojsonLayer01;
         let geojsonLayer02;
         let geojsonLayer03;
@@ -198,12 +215,15 @@
             fillOpacity: 0.5
         };
 
+        // -------------------------------------------------------------------------------------------------------------------------------------
+        // Functions
+
         function stat_color(d) {
-            if(d > 0.8) return "#d7191c";
-            if(d > 0.6) return "#fdae61";
-            if(d > 0.4) return "#ffffbf";
-            if(d > 0.2) return "#a6d96a"; 
-            return "#1a9641";
+            if(d > 0.8) return "#ff0000";
+            if(d > 0.6) return "#ff5a00";
+            if(d > 0.4) return "#ff9a00";
+            if(d > 0.2) return "#ffce00"; 
+            return "#f0ff00";
         }
 
         function stat_style(feature) {
@@ -211,24 +231,27 @@
                 fillColor: stat_color(feature.properties.degradacio),
                 weight: 1,
                 opacity: 1,
-                color: "purple",
+                color: "black",
                 fillOpacity: 1
             };
         }
 
         function highlight_feature_vegas(e) {
-            infoDiv('20em')
+            infoDiv('30em')
             info_p = document.getElementById("current_feature");
             info_h4 = document.getElementById("dynamic-title");
             e.target.setStyle(highlightStyle);
             e.target.bringToFront();
-            info_h4.innerText = "Vegas";
+            info_h4.innerText = "Descripción de la vega";
             info_p.innerHTML =
                 "<b>Denominación vega:</b> " + e.target.feature.properties.Name + "<br>" +
-                "<b>Área [m2]:</b> " + e.target.feature.properties.area + "<br>" +
-                "<b>Altura [m]:</b> " + e.target.feature.properties.demcuenca1 + "<br>" +
                 "<b>Indice degradación:</b> " + e.target.feature.properties.degradacio + "<br>" +
-                "<b>Índice de humedad (TWI):</b> " + e.target.feature.properties.twi_crb + "<br>";   
+                "<b>Invasión rosa mosqueta [%]:</b> " + e.target.feature.properties.percen_Rosa + "<br>" +
+                "<b>Área quemada [%]:</b> " + e.target.feature.properties.percen_Incendio + "<br>" +
+                "<b>Ocurrencia incendios:</b> " + e.target.feature.properties.quemada + "<br>" +
+                "<b>Área [m<sup>2</sup>]:</b> " + e.target.feature.properties.area_int + "<br>" +
+                "<b>Altura [m]:</b> " + e.target.feature.properties.demcuenta_int + "<br>" +
+                "<b>Observaciones (Rubio M.C. y Betancourt P., 2018):</b> " + e.target.feature.properties.observacio + "<br>"
         }
 
         function reset_highlight(e, gjsLay) {
@@ -271,7 +294,7 @@
                     style: {
                         weight : 0.75,
                         color : "black",
-                        fillColor : "#1b88e1",
+                        fillColor : "#f2efe9",
                         fillOpacity : 0.9},
                 });
                 CuencaRBGroup.addLayer(geojsonLayer03);
@@ -279,7 +302,7 @@
         //CuencaRBGroup.addTo(map); // Add the CuencaRBGroup layer to the map by default
 
         // Loading Argentina departments boundaries layer
-        fetch("data/vegas_4326.geojson")
+        fetch("data/vegas_4326v2.geojson")
             .then(function(response) {
                 return response.json();
             })
@@ -302,18 +325,14 @@
 
         // Function that runs when legend is added to map
         legend.onAdd = function() {
-
-            // Create <div> element and populate it with HTML
             let div = L.DomUtil.create("div", "legend");        
             div.innerHTML = 
-                '<b>Índice de degradación</b><br>' +
-                '<div class="legend-box color-high"></div>> 0.8<br>' +
-                '<div class="legend-box color-medium-high"></div>0.61-0.80<br>' +
-                '<div class="legend-box color-medium"></div>0.41-0.60<br>' +
-                '<div class="legend-box color-medium-low"></div>0.21-0.40<br>' +
-                '<div class="legend-box color-low"></div>0.00-0.20<br>';
-
-            // Return the legend <div> containing the HTML content
+                '<div class="legend-title">Índice de degradación</div>' +
+                '<div class="legend-item"><div class="legend-box" style="background-color: #ff0000"></div>> 0.8</div>' +
+                '<div class="legend-item"><div class="legend-box" style="background-color: #ff5a00"></div>0.61–0.80</div>' +
+                '<div class="legend-item"><div class="legend-box" style="background-color: #ff9a00"></div>0.41–0.60</div>' +
+                '<div class="legend-item"><div class="legend-box" style="background-color: #ffce00"></div>0.21–0.40</div>' +
+                '<div class="legend-item"><div class="legend-box" style="background-color: #f0ff00"></div>0.00–0.20</div>';
             return div;
         };
 
@@ -362,16 +381,14 @@
         panel.addTo(map);
 
         // Layers controller
-        let customControl = L.control.layers(null, overlayBound, {collapsed: false });
-        
+        let customControl = L.control.layers(null, overlayBound, { collapsed: false });
 
         // Panel settings
         let panelDiv = document.getElementById("panel");
         if (panelDiv) {
             let title = document.createElement("h4");
             title.innerText = "Capas";
-            title.style.fontSize = "17px";
-            title.style.marginBottom = "0px";
+            title.classList.add("panel-title"); // Use a CSS class instead
             panelDiv.appendChild(title);
 
             customControl.addTo(map);
