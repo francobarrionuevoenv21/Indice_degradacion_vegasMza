@@ -10,7 +10,7 @@ El presente mapa interactivo es parte del trabajo presentado en el
 **Desarrollador de la app:** Franco David Barrionuevo (@francobarrionuevoenv21)
 
 
-#### Cita sugerida del trabajo completo
+#### Cita sugerida del trabajo completo:
 
 Torre Azzaroni, M.L., Barrionuevo, F.D., Rubio, M.C. y Morandeira, N.S. (2025). *Degradación de las vegas y bosquecitos de chacay por cambios de cobertura e incendios en la cuenca del río Blanco (Mendoza, Argentina)*. VIII Congreso Nacional de Conservación de la Biodiversidad. San Juan, Argentina.
 
