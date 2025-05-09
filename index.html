@@ -8,16 +8,17 @@
     <style>
         body {
             padding: 0;
-            margin: 10;
+            margin: 0;
         }
 
         html, body, #map {
             height: 100vh; /* Full viewport height */
-            width: 100vw; /* Full viewport width */
+            width: 100vw;  /* Full viewport width */
             margin: 0;
             padding: 0;
+            overflow: hidden; /* Optional: Prevents scrolling */
         }
-
+        
         /* Style for the info object*/
         .info {
             background-color: #697f3dd6;
@@ -347,7 +348,7 @@
             let div = L.DomUtil.create("div", "legend");        
             div.innerHTML = 
                 '<div class="legend-title">Índice de degradación</div>' +
-                '<div class="legend-item"><div class="legend-box" style="background-color: #ff0000"></div>> 0.8</div>' +
+                '<div class="legend-item"><div class="legend-box" style="background-color: #ff0000"></div>0.81-1.00</div>' +
                 '<div class="legend-item"><div class="legend-box" style="background-color: #ff5a00"></div>0.61–0.80</div>' +
                 '<div class="legend-item"><div class="legend-box" style="background-color: #ff9a00"></div>0.41–0.60</div>' +
                 '<div class="legend-item"><div class="legend-box" style="background-color: #ffce00"></div>0.21–0.40</div>' +
