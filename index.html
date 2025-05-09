@@ -2,8 +2,7 @@
 <html>
 <head>
     <title>Degradación de vegas cuenca del Rio Blanco Web Map App</title>
-    /*<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">*/
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="css/leaflet.css">
     <script src="js/leaflet.js"></script>
     <style>
@@ -40,6 +39,19 @@
         }
 
         /* Style for the legend object*/
+
+
+        /* Style for the entire legend container */
+        .legend {
+            background-color: #697f3dd8; /* Light transparent background */
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
         .legend-title {
             font-weight: bold;
             color: #e4b242;
@@ -59,6 +71,23 @@
             margin-right: 8px;
             vertical-align: middle;
             border: 1px solid #999;
+        }
+
+        /* Responsive behavior for smaller screens */
+        @media (max-width: 768px) {
+            .legend {
+                max-width: 40%;
+                font-size: 14px;
+            }
+        }
+
+        /* For extra small screens */
+        @media (max-width: 480px) {
+            .legend {
+                max-width: 40%;
+                font-size: 13px;
+                padding: 8px;
+            }
         }
 
         /*CHECK THIS!!!*/
@@ -135,17 +164,6 @@
         #about-content a {
             color: #0055cc;
             text-decoration: none;
-        }
-
-        /* Style for the entire legend container */
-        .legend {
-            background-color: #697f3dd8; /* Light transparent background */
-            padding: 10px;
-            border-radius: 6px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            line-height: 1.5;
         }
 
     </style>
