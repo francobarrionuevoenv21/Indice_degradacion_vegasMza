@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Degradación de vegas cuenca del Rio Blanco Web Map App 02</title>
+    <title>Degradación de vegas cuenca del Rio Blanco Web Map App 03</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="css/leaflet.css">
     <script src="js/leaflet.js"></script>
@@ -38,9 +38,6 @@
             font-size: 14px;
             color: black;
         }
-
-        /* Style for the legend object*/
-
 
         /* Style for the entire legend container */
         .legend {
@@ -130,14 +127,13 @@
             .legend {
                 max-width: 40%;
                 font-size: 14px;
-                bottom: 40px;
+                bottom: 80px;
             }
 
             .panel,
             .info {
                 max-width: 40%;
                 font-size: 14px;
-                top: 10px;
             }
         }
 
@@ -192,7 +188,7 @@
             info.addTo(map); // Add the control to the map
         }
         
-        // Initialize infoDiv and infoDiv_SMN
+        // Initialize infoDiv
         infoDiv('15em') 
 
         // -------------------------------------------------------------------------------------------------------------------------------------
@@ -251,8 +247,9 @@
 
         // -------------------------------------------------------------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------------------------------------------------------------
-        // Initializing political boundaries layers
+        // Initializing and adding layers to the map
 
+        // Loading Parque Provincial Cordón del Plata boundaries layer
         fetch("data/pque_cuencaplata_4326.geojson")
             .then(function(response) {
                 return response.json();
@@ -267,8 +264,8 @@
                     });
                     pqueCPGroup.addLayer(geojsonLayer02);
             });
-        //pqueCPGroup.addTo(map); // Add the pqueCPGroup layer to the map by default
-            
+
+        // Loading Cuenca del Río Blanco boundaries layer    
         fetch("data/cuenca_RBlanco_4326.geojson")
         .then(function(response) {
             return response.json();
@@ -283,9 +280,8 @@
                 });
                 CuencaRBGroup.addLayer(geojsonLayer03);
         });
-        //CuencaRBGroup.addTo(map); // Add the CuencaRBGroup layer to the map by default
 
-        // Loading Argentina departments boundaries layer
+        // Loading veagas boundaries + info degradación layer
         fetch("data/vegas_4326v2.geojson")
             .then(function(response) {
                 return response.json();
@@ -302,8 +298,8 @@
                     });
                     vegasGroup.addLayer(geojsonLayer01);
                 });
-        //vegasGroup.addTo(map); // Add the vegasGroup layer to the map by default
 
+        // -------------------------------------------------------------------------------------------------------------------------------------
         // Create Leaflet control object for legend
         let legend = L.control({position: "bottomright"});
 
