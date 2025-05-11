@@ -114,8 +114,11 @@
                 font-size: 14px;
                 bottom: 40px;
             }
-
             .panel,
+            .leaflet-control-layers {
+                max-width: 50%;
+                font-size: 14px;
+            }
             .info {
                 max-width: 40%;
                 font-size: 14px;
@@ -129,8 +132,11 @@
                 font-size: 14px;
                 bottom: 80px;
             }
-
             .panel,
+            .leaflet-control-layers {
+                max-width: 50%;
+                font-size: 14px;
+            }
             .info {
                 max-width: 40%;
                 font-size: 14px;
@@ -321,8 +327,9 @@
 
         // -------------------------------------------------------------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------------------------------------------------------------
-        // Complementary layers controller
+        // Layers controller
 
+        // Function to bring the group to the front
         function bringGroupToFront(group) {
             group.eachLayer(function(layer) {
                 if (layer.bringToFront) {
@@ -331,9 +338,10 @@
             });
         }
         
+        // Add the layers to the map in the following order
         vegasGroup.addTo(map);
         CuencaRBGroup.addTo(map);
-        bringGroupToFront(vegasGroup);
+        bringGroupToFront(vegasGroup); // Just to ensure vegasGroup is on top
 
 
         // Overlay layers
@@ -343,7 +351,7 @@
             "<b>Parque Provincial Cordón del Plata</b>": pqueCPGroup
         };
 
-        // Add this logic to the overlay events
+        // Add event listeners to bring the group to the front when layers are added or removed
         map.on('overlayadd', function () {
             bringGroupToFront(vegasGroup);
         });
@@ -374,12 +382,6 @@
             customControl.addTo(map);
             panelDiv.appendChild(customControl.getContainer());
         }
-        // -------------------------------------------------------------------------------------------------------------------------------------
-        // -------------------------------------------------------------------------------------------------------------------------------------
-        // About panel 
-        document.getElementById("about-toggle").addEventListener("click", function () {
-            document.getElementById("about-content").classList.toggle("hidden");
-        });
         // -------------------------------------------------------------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------------------------------------------------------------
         vegasGroup.addTo(map); // Add the vegasGroup layer to the map by default
