@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Degradación de vegas cuenca del Rio Blanco Web Map App 03</title>
+    <title>Degradación de vegas cuenca del Rio Blanco Web Map App 04</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="css/leaflet.css">
     <script src="js/leaflet.js"></script>
@@ -96,7 +96,8 @@
         }
         
         .leaflet-control-layers {
-            min-width: 250px !important; /* Set a minimum width */
+            width: 100%;
+            /*min-width: 250px !important; /* Set a minimum width */
             max-width: 350px; /* Optional: set a max width */
             min-height: 50px !important; /* Set a minimum height */
             max-height: 400px; /* Optional: set a max height */
@@ -114,9 +115,13 @@
                 font-size: 14px;
                 bottom: 40px;
             }
-            .panel,
-            .leaflet-control-layers {
+            .panel{
                 max-width: 50%;
+                font-size: 14px;
+            }
+            .leaflet-control-layers {
+                width: 100%; /* Fill the panel */
+                max-width: none;
                 font-size: 14px;
             }
             .info {
@@ -171,85 +176,6 @@
         let vegasGroup = L.layerGroup()// Vegas boundaries & degradación index
         let pqueCPGroup = L.layerGroup()// Parque Cuenca del Plata boundaries
         let CuencaRBGroup = L.layerGroup()// Cuenca del Rio Blanco boundaries
-
-        // -------------------------------------------------------------------------------------------------------------------------------------
-        // -------------------------------------------------------------------------------------------------------------------------------------
-        // Info panel settings --> Descripción de la vega
-        let info = L.control({position: "topright"}); // Referencias control
-
-        function infoDiv(divWidth) {
-            if (info._map) {
-                info.remove(); // Remove existing control if already added
-            }
-
-            info.onAdd = function() {
-                let div = L.DomUtil.create("div", "info");
-                div.innerHTML = `
-                    <h4 id="dynamic-title">Información</h4>
-                    <p id="current_feature"></p>`;
-                div.style.width = divWidth; // Only keep width if it's dynamic
-                return div;
-            };
-
-            info.addTo(map); // Add the control to the map
-        }
-        
-        // Initialize infoDiv
-        infoDiv('15em') 
-
-        // -------------------------------------------------------------------------------------------------------------------------------------
-        // -------------------------------------------------------------------------------------------------------------------------------------
-        // Features styles and events
-
-        let highlightStyle = {
-            weight: 5,
-            color: "yellow",
-            fillOpacity: 0.5
-        };
-
-        function stat_color(d) {
-            if(d > 0.8) return "#ff0000";
-            if(d > 0.6) return "#ff5a00";
-            if(d > 0.4) return "#ff9a00";
-            if(d > 0.2) return "#ffce00"; 
-            return "#f0ff00";
-        }
-
-        function stat_style(feature) {
-            return {
-                fillColor: stat_color(feature.properties.degradacio),
-                weight: 1,
-                opacity: 1,
-                color: "black",
-                fillOpacity: 1
-            };
-        }
-
-        function highlight_feature_vegas(e) {
-            infoDiv('30em')
-            info_p = document.getElementById("current_feature");
-            info_h4 = document.getElementById("dynamic-title");
-            e.target.setStyle(highlightStyle);
-            e.target.bringToFront();
-            info_h4.innerText = "Descripción de la vega";
-            info_p.innerHTML =
-                "<b>Denominación vega:</b> " + e.target.feature.properties.Name + "<br>" +
-                "<b>Índice de degradación:</b> " + e.target.feature.properties.degradacio + "<br>" +
-                "<b>Invasión rosa mosqueta [%]:</b> " + e.target.feature.properties.percen_Rosa + "<br>" +
-                "<b>Área quemada [%]:</b> " + e.target.feature.properties.percen_Incendio + "<br>" +
-                "<b>Ocurrencia incendios:</b> " + e.target.feature.properties.quemada + "<br>" +
-                "<b>Área [m<sup>2</sup>]:</b> " + e.target.feature.properties.area_int + "<br>" +
-                "<b>Altura [m]:</b> " + e.target.feature.properties.demcuenta_int + "<br>" +
-                "<b>Observaciones (Rubio M.C. y Betancourt P., 2018):</b> " + e.target.feature.properties.observacio + "<br>"
-        }
-
-        function reset_highlight(e, gjsLay) {
-            infoDiv('15em')
-            e.target.bringToFront();
-            gjsLay.resetStyle(e.target);
-            info_p.innerHTML = "";
-            info_h4.innerText = "Referencias";
-        }
 
         // -------------------------------------------------------------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------------------------------------------------------------
@@ -324,9 +250,85 @@
 
         // Add Legend to Map
         legend.addTo(map);
+        // -------------------------------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------------------------------
+        // Info panel settings --> Descripción de la vega
+        let info = L.control({position: "topright"}); // Referencias control
 
+        function infoDiv(divWidth) {
+            if (info._map) {
+                info.remove(); // Remove existing control if already added
+            }
+
+            info.onAdd = function() {
+                let div = L.DomUtil.create("div", "info");
+                div.innerHTML = `
+                    <h4 id="dynamic-title">Información</h4>
+                    <p id="current_feature"></p>`;
+                div.style.width = divWidth; // Only keep width if it's dynamic
+                return div;
+            };
+
+            info.addTo(map); // Add the control to the map
+        }
+        
+        // Initialize infoDiv
+        infoDiv('15em') 
         // -------------------------------------------------------------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------------------------------------------------------------
+        // Features styles and events
+
+        let highlightStyle = {
+            weight: 5,
+            color: "yellow",
+            fillOpacity: 0.5
+        };
+
+        function stat_color(d) {
+            if(d > 0.8) return "#ff0000";
+            if(d > 0.6) return "#ff5a00";
+            if(d > 0.4) return "#ff9a00";
+            if(d > 0.2) return "#ffce00"; 
+            return "#f0ff00";
+        }
+
+        function stat_style(feature) {
+            return {
+                fillColor: stat_color(feature.properties.degradacio),
+                weight: 1,
+                opacity: 1,
+                color: "black",
+                fillOpacity: 1
+            };
+        }
+
+        function highlight_feature_vegas(e) {
+            infoDiv('30em')
+            info_p = document.getElementById("current_feature");
+            info_h4 = document.getElementById("dynamic-title");
+            e.target.setStyle(highlightStyle);
+            e.target.bringToFront();
+            info_h4.innerText = "Descripción de la vega";
+            info_p.innerHTML =
+                "<b>Denominación vega:</b> " + e.target.feature.properties.Name + "<br>" +
+                "<b>Índice de degradación:</b> " + e.target.feature.properties.degradacio + "<br>" +
+                "<b>Invasión rosa mosqueta [%]:</b> " + e.target.feature.properties.percen_Rosa + "<br>" +
+                "<b>Área quemada [%]:</b> " + e.target.feature.properties.percen_Incendio + "<br>" +
+                "<b>Ocurrencia incendios:</b> " + e.target.feature.properties.quemada + "<br>" +
+                "<b>Área [m<sup>2</sup>]:</b> " + e.target.feature.properties.area_int + "<br>" +
+                "<b>Altura [m]:</b> " + e.target.feature.properties.demcuenta_int + "<br>" +
+                "<b>Observaciones (Rubio M.C. y Betancourt P., 2018):</b> " + e.target.feature.properties.observacio + "<br>"
+        }
+
+        function reset_highlight(e, gjsLay) {
+            infoDiv('15em')
+            e.target.bringToFront();
+            gjsLay.resetStyle(e.target);
+            info_p.innerHTML = "";
+            info_h4.innerText = "Referencias";
+        }
+        // -------------------------------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------------------------------    
         // Layers controller
 
         // Function to bring the group to the front
