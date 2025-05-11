@@ -111,20 +111,29 @@
             font-size: 13px;
         }
 
-        /* Responsive behavior for smaller screens */
-        @media (max-width: 800px) {
+        @media ((max-width: 800px) or (max-width: 600px) or (max-width: 480px)) and (orientation: portrait) {
             .legend {
                 max-width: 40%;
                 font-size: 14px;
                 bottom: 40px;
             }
 
-            .panel {
+            .panel,
+            .info {
                 max-width: 40%;
                 font-size: 14px;
                 top: 40px;
             }
+        }
 
+        @media ((max-width: 800px) or (max-width: 600px) or (max-width: 480px)) and (orientation: landscape) {
+            .legend {
+                max-width: 40%;
+                font-size: 14px;
+                bottom: 40px;
+            }
+
+            .panel,
             .info {
                 max-width: 40%;
                 font-size: 14px;
@@ -223,7 +232,7 @@
             info_h4.innerText = "Descripción de la vega";
             info_p.innerHTML =
                 "<b>Denominación vega:</b> " + e.target.feature.properties.Name + "<br>" +
-                "<b>Indice degradación:</b> " + e.target.feature.properties.degradacio + "<br>" +
+                "<b>Índice de degradación:</b> " + e.target.feature.properties.degradacio + "<br>" +
                 "<b>Invasión rosa mosqueta [%]:</b> " + e.target.feature.properties.percen_Rosa + "<br>" +
                 "<b>Área quemada [%]:</b> " + e.target.feature.properties.percen_Incendio + "<br>" +
                 "<b>Ocurrencia incendios:</b> " + e.target.feature.properties.quemada + "<br>" +
