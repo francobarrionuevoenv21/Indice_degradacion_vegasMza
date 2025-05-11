@@ -74,24 +74,6 @@
             border: 1px solid #999;
         }
 
-        /* Responsive behavior for smaller screens */
-        @media (max-width: 2600px) {
-            .legend {
-                max-width: 40%;
-                font-size: 14px;
-                bottom: 30px;
-            }
-        }
-        
-        /* Responsive behavior for smaller screens */
-        @media (max-width: 800px) {
-            .legend {
-                max-width: 40%;
-                font-size: 14px;
-                bottom: 30px;
-            }
-        }
-
         /*CHECK THIS!!!*/
         .info h4 {
             margin: 0 0 5px;
@@ -129,56 +111,31 @@
             font-size: 13px;
         }
 
-        #about-panel {
-            position: absolute;
-            bottom: 12px; /* Adjust to stay above zoom controls */
-            left: 50px;   /* Near the zoom control */
-            z-index: 1000;
-            font-family: Arial, sans-serif;
-        }
+        /* Responsive behavior for smaller screens */
+        @media (max-width: 800px) {
+            .legend {
+                max-width: 40%;
+                font-size: 14px;
+                bottom: 40px;
+            }
 
-        #about-panel button {
-            background: #fff;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 4px 8px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.4);
-            border-radius: 4px;
-        }
+            .panel {
+                max-width: 40%;
+                font-size: 14px;
+                top: 40px;
+            }
 
-        #about-content {
-            margin-top: 5px;
-            background: rgba(255,255,255,0.95);
-            border-radius: 4px;
-            padding: 8px;
-            font-size: 13px;
-            color: #003366;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-            max-width: 200px;
-            display: block;
-        }
-
-        #about-content.hidden {
-            display: none;
-        }
-
-        #about-content a {
-            color: #0055cc;
-            text-decoration: none;
+            .info {
+                max-width: 40%;
+                font-size: 14px;
+                top: 40px;
+            }
         }
 
     </style>
 </head>
 <body>
     <div id="map"></div>
-    <div id="about-panel">
-        <button id="about-toggle">ℹ️</button>
-        <div id="about-content" class="hidden">
-          <strong>Creado por</strong><br>
-          Franco Barrionuevo<br>
-          <a href="mailto:francod.barrionuevo@gmail.com">francod.barrionuevo@gmail.com</a>
-        </div>
     </div>
     <script>
         // -------------------------------------------------------------------------------------------------------------------------------------
