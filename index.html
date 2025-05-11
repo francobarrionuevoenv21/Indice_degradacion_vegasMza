@@ -122,7 +122,7 @@
             .info {
                 max-width: 40%;
                 font-size: 14px;
-                top: 40px;
+                top: 20px;
             }
         }
 
@@ -137,7 +137,7 @@
             .info {
                 max-width: 40%;
                 font-size: 14px;
-                top: 40px;
+                top: 20px;
             }
         }
 
@@ -161,7 +161,18 @@
 
         // -------------------------------------------------------------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------------------------------------------------------------
-        // Complete
+        // Variables intialization
+
+        let geojsonLayer01;
+        let geojsonLayer02;
+        let geojsonLayer03;
+        let vegasGroup = L.layerGroup()// Vegas boundaries & degradación index
+        let pqueCPGroup = L.layerGroup()// Parque Cuenca del Plata boundaries
+        let CuencaRBGroup = L.layerGroup()// Cuenca del Rio Blanco boundaries
+
+        // -------------------------------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------------------------------
+        // Info panel settings --> Descripción de la vega
         let info = L.control({position: "topright"}); // Referencias control
 
         function infoDiv(divWidth) {
@@ -186,24 +197,13 @@
 
         // -------------------------------------------------------------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------------------------------------------------------------
-        // Highlighting style for features in departamentos and cuencas layers
-        
-        //let info_p = document.getElementById("current_feature"); // If any doubt check info.onAdd
-        //let info_h4 = document.getElementById("dynamic-title");
-        let geojsonLayer01;
-        let geojsonLayer02;
-        let geojsonLayer03;
-        let vegasGroup = L.layerGroup()// Vegas boundaries & degradación index
-        let pqueCPGroup = L.layerGroup()// Parque Cuenca del Plata boundaries
-        let CuencaRBGroup = L.layerGroup()// Cuenca del Rio Blanco boundaries
+        // Features styles and events
+
         let highlightStyle = {
             weight: 5,
             color: "yellow",
             fillOpacity: 0.5
         };
-
-        // -------------------------------------------------------------------------------------------------------------------------------------
-        // Functions
 
         function stat_color(d) {
             if(d > 0.8) return "#ff0000";
@@ -252,9 +252,6 @@
         // -------------------------------------------------------------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------------------------------------------------------------
         // Initializing political boundaries layers
-        //let geojsonLayer01;
-        //let Boundaries01 = L.layerGroup()// Vegas
-        // -------------------------------------------------------------------------------------------------------------------------------------
 
         fetch("data/pque_cuencaplata_4326.geojson")
             .then(function(response) {
