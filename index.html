@@ -116,11 +116,11 @@
                 bottom: 40px;
             }
             .panel{
-                max-width: 50%;
+                max-width: 60%;
                 font-size: 14px;
             }
             .leaflet-control-layers {
-                width: 100%; /* Fill the panel */
+                width: 90%; /* Fill the panel */
                 max-width: none;
                 font-size: 14px;
             }
@@ -129,24 +129,39 @@
                 font-size: 14px;
                 top: 10px;
             }
+
+            .leaflet-control-zoom {
+                bottom: 40px; /* Raise it above OS navigation bar */
+            }
         }
 
         @media (max-width: 800px) and (orientation: landscape) {
             .legend {
                 max-width: 40%;
                 font-size: 14px;
-                bottom: 80px;
+                bottom: 40px;
             }
-            .panel,
+            .panel{
+                max-width: 60%;
+                font-size: 14px;
+            }
             .leaflet-control-layers {
-                max-width: 50%;
+                width: 90%; /* Fill the panel */
+                max-width: none;
                 font-size: 14px;
             }
             .info {
                 max-width: 40%;
                 font-size: 14px;
+                top: 10px;
+            }
+
+            .leaflet-control-zoom {
+                bottom: 40px; /* Raise it above OS navigation bar */
             }
         }
+
+
 
     </style>
 </head>
